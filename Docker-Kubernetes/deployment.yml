@@ -11,18 +11,18 @@ spec:
   template:
     metadata:
       labels:
-        name: gsampleapp
+        name: sampleapp
     spec:
       containers:
       - name: sampleapp
         image: testrepo/sampleapp:1.0.0
         imagePullPolicy: IfNotPresent
         ports:
-          - containerPort: 8080
+          - containerPort: 8000
         livenessProbe:           
           httpGet:
             path: /health
-            port: 8080
+            port: 8000
             scheme: HTTP
           initialDelaySeconds: 5
           periodSeconds: 15
@@ -30,7 +30,7 @@ spec:
         readinessProbe:         
           httpGet:
             path: /readiness
-            port: 8080
+            port: 8000
             scheme: HTTP
           initialDelaySeconds: 5
           timeoutSeconds: 1 
