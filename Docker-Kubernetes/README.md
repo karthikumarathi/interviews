@@ -34,4 +34,4 @@ kubectl get services
 
 ## Smoke Test the app
 Check the **EXTERNAL-IP** column and copy the IP address associated with the sampleapp-service.<br/>
-Access the app through browser http://<ipaddress>
+Access the app through browser **http://ipaddress**
