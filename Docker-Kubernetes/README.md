@@ -1,54 +1,28 @@
-# Simple Docker and Kubernetes Tests
 
-For the following tests:
+Build the docker image
+$ docker build . -t sampleapp
 
-1. Fork this repository.
-2. Make fixes, changes and improvements as described below.
-3. Create lightweight documentation in the repositories README.md with how it works and what your changes are.
-4. (Optional) Create a public CI pipeline that builds the Docker image (e.g. Using Github Actions, GitLab CI etc....)
+Multi-stage build
+$ docker build . -f Dockerfile.multistage -t sampleapp
 
-It is expected that we should be able to clone your fork, read the instructions / documentation, build the docker image and deploy the image to a simple Kubernetes cluster.
+Tag the image
+$ docker tag sampleapp testrepo/sampleapp:1.0.0
 
-_While you may search the internet for answers, please do not ask others to assist or provide code for you._
+Login to docker with your docker Id
+$ docker login
+Login with your Docker ID to push and pull images
 
----
+Push the image to docker hub
+$ docker push testrepo/sampleapp:1.0.0
 
-The following test will require you to do the following:
+Create Kubenetes deployment
+$ kubectl apply -f deployment.yml
 
-1. Optimise Dockerfile for caching benefits.
-2. Convert the current Dockerfile into a multistage build Dockerfile.
-3. Write a simple Kubernetes manifest that could be used to deploy the image to a Kubernetes cluster.
+Create a loadbalancer service to expose the app
+kubectl apply -f service.yml
 
-### 1. Fix Dockerfile
+Get the service configuration ( External IP)
+kubectl get services
 
-The below Dockerfile in its current state does not compile.
-
-1. Fix the Dockerfile to continue.
-2. (Optional) Make any optimisations to the Dockerfile as you see fit, make sure you document your reasons.
-
-For all the files that will be required they can be cloned from the following repository - [HERE](https://github.com/sammcj/technical-tests)
-
-```Dockerfile
-FROM golang:alpine
-ENV GO111MODULE=on
-WORKDIR /app
-ADD ./ /app
-RUN apk update --no-cache
-RUN apk add git
-RUN go build -o golang-test .
-ENTRYPOINT ["/app/golang-test"]
-EXPOSE 8000
-```
-
-### 2. Multistage build Dockerfile
-
-1. Convert the Dockerfile to use a multistage build.
-
-- The final multi-stage Dockerfile should only have the essential components.
-- You should also consider optimisation for caching, and structure in your final solution.
-
-## 3. Simple Kubernetes Deployment
-
-1. Create a simple Kubernetes deployment manifest and add it to the repo.
-2. Ensure that your application runs, has sensible configuration to handle failures and potential resourcing issues.
-3. Remember to update your documentation.
+Check the EXTERNAL-IP column and copy the IP address associated with the sampleapp-service.
+Access the app through browser http://<ipaddress>
