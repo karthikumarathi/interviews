@@ -20,17 +20,12 @@ spec:
         ports:
           - containerPort: 8000
         livenessProbe:           
-          httpGet:
-            path: /health
+          tcpSocket:
             port: 8000
-            scheme: HTTP
-          initialDelaySeconds: 5
-          periodSeconds: 15
-          timeoutSeconds: 5
+          initialDelaySeconds: 15
+          periodSeconds: 20
         readinessProbe:         
-          httpGet:
-            path: /readiness
+          tcpSocket:
             port: 8000
-            scheme: HTTP
           initialDelaySeconds: 5
-          timeoutSeconds: 1 
+          periodSeconds: 10 
